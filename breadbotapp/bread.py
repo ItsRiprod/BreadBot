@@ -22,14 +22,16 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    has_emoji = any(char in emoji.UNICODE_EMOJI['en'] for char in message.content)
     
-    # Check if the message does not contain :bread: emoji
-    if ':bread:' not in message.content and '🍞' not in message.content:
+    # Check if the message has any emojis
+    if not has_emoji:
         # Delete the message
         await message.delete()
         print(f'Message deleted from {message.author.name}: {message.content}')
     else:
         await message.add_reaction('🍞')
+        
     await client.process_commands(message)
 
 
